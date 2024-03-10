@@ -10,7 +10,7 @@ class Program
             public DateTime _logTime; 
 
             public void Display() {
-                Console.WriteLine(_logTime +": "+ _prompt);
+                Console.WriteLine("Date: "+ _logTime +" - Prompt: "+ _prompt);
                 Console.WriteLine(_answer);
                 Console.WriteLine();
             }
@@ -40,13 +40,13 @@ class Program
 
             string prompt = questions[random.Next(0, questions.Length)];
             Console.WriteLine(prompt);
-            string user_answer = Console.ReadLine();
+            string userAnswer = Console.ReadLine();
             DateTime time = DateTime.Now;
 
             // class entery storte the prompt and the answer and the date
             Entery userLog = new Entery();
             userLog._prompt = prompt;
-            userLog._answer = user_answer;
+            userLog._answer = userAnswer;
             userLog._logTime = time;
             // append into a list<Entery>
             _enteries.Add(userLog);
@@ -54,6 +54,7 @@ class Program
     
         public void DisplayAll() {
             _enteries.ForEach(entery => {
+                Console.Write(_enteries.IndexOf(entery) + 1 +".");
                 entery.Display();
             });
         }
@@ -72,6 +73,8 @@ class Program
                     log._answer = array[2];
                     _enteries.Add(log);
                     }
+
+            DisplayAll();
         }
     }
 
@@ -83,6 +86,12 @@ class Program
         }
     }
 
+        public void Edit(int enteryNumber) {
+            Entery selectedEntery = _enteries[enteryNumber-1];
+            Console.WriteLine("Date: "+ selectedEntery._logTime + " - Prompt: "+selectedEntery._prompt);
+            string newAnswer = Console.ReadLine();
+            selectedEntery._answer = newAnswer;
+        }
     }
 
     static void Main(string[] args)
@@ -94,15 +103,21 @@ class Program
         // process
         while (!quit) { 
             Console.WriteLine("Please select one of the following choices");
-            Console.WriteLine("1.Write\n2.Display\n3.Load\n4.Save\n5.Quit");
-            string user_respons = Console.ReadLine();
-            switch (user_respons) {
+            Console.WriteLine("1.Write\n2.Display\n3.Load\n4.Save\n5.Edit\n6.Quit");
+            Console.Write("What would you like to do? ");
+            string userRespons = Console.ReadLine();
+            switch (userRespons) {
                 case "1": {
                     journal.WriteLog();
                     break;
                 };
                 case "2": {
-                    journal.DisplayAll();
+                    if (journal._enteries.Count != 0) {
+                        journal.DisplayAll();
+                    }   
+                    else {
+                        Console.WriteLine("\nThey are no enteries yet.\nPlease write enteries before tring to display them.\n");
+                    }
                     break;
                 };
                 case "3": {
@@ -118,6 +133,17 @@ class Program
                     break;
                 };
                 case "5": {
+                    if (journal._enteries.Count != 0) {
+                        Console.WriteLine("Select the entery number: ");
+                        int enteryNumber = int.Parse(Console.ReadLine());
+                        journal.Edit(enteryNumber);
+                    }
+                    else {
+                        Console.WriteLine("\nThey are no enteries yet.\nPlease write enteries or load a file before editing.\n");
+                    }
+                    break;
+                };
+                case "6": {
                     quit = true;
                     break;
                 };
