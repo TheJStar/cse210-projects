@@ -22,7 +22,7 @@ public class Scripture {
             }
         }
     }
-        public void UnhideRandomWords(int numberToHide) {
+    public void UnhideRandomWords(int numberToHide) {
         Random random = new Random();
         int i = 0;
         int j = 0;
