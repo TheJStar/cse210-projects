@@ -2,6 +2,7 @@ using System;
 
 class Program
 {
+    // added a new activity it's called Ponder activity it helps you ponder about things that bother you
     static void Main(string[] args)
     {
         string respons = "";
@@ -13,7 +14,8 @@ class Program
             Console.WriteLine($"{tab}1. Start breathing Activity");
             Console.WriteLine($"{tab}2. Start reflecting Activity");
             Console.WriteLine($"{tab}3. Start listing Activity");
-            Console.WriteLine($"{tab}4. Quit");
+            Console.WriteLine($"{tab}4. Start ponder Activity");
+            Console.WriteLine($"{tab}5. Quit");
             Console.Write("Select a choice from the menu: ");
             respons = Console.ReadLine();
 
@@ -46,7 +48,16 @@ class Program
                     l.Run();
                     break;
                 }
+                case "4": {
+                    PonderActvity p = new PonderActvity();
+                    p.DisplayStartingMessage();
+                    Console.Write("How long, in seconds, would you like for your session? ");
+                    int seconds = int.Parse(Console.ReadLine());
+                    p.SetDuration(seconds);
+                    p.Run();
+                    break;
+                }
             }
-        } while (respons != "4");
+        } while (respons != "5");
     }
 }
