@@ -54,6 +54,7 @@ public class GoalManager {
         
     }
     public void DisplayPlayerInfo () {
+        Console.WriteLine();
         Console.WriteLine($"You {_score} points.");
         Console.WriteLine();
     }
@@ -136,7 +137,6 @@ public class GoalManager {
         _score += int.Parse(currentGoal.GetPoints());
         Console.WriteLine($"Congratulations! You have earned {currentGoal.GetPoints()} points!");
         Console.WriteLine($"You now have {_score} points.");
-        Console.WriteLine();
     }
     public void SaveGoals () {
         Console.Write("What is the filename of the goal file? ");
@@ -152,7 +152,7 @@ public class GoalManager {
     public void LoadGoals () {
         Console.Write("What is the filename of the goal file? ");
         string filename = Console.ReadLine();
-        string[] lines = File.ReadAllLines(filename);
+        string[] lines = System.IO.File.ReadAllLines(filename);
 
         foreach (string line in lines) {
             string[] parts = line.Split(":");

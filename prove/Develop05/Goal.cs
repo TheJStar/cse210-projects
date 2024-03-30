@@ -22,7 +22,7 @@ public abstract class Goal {
     public void SetDescription (string description) {
         _description = description;
     }
-    public string GetPoints () {
+    public virtual string GetPoints () {
         return _points;
     }
     public void SetPoints (string points) {

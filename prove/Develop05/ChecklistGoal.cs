@@ -15,6 +15,13 @@ public class ChecklistGoal : Goal {
         _bonus = bonus;
         _amountCompleted = amountCompleted;
     }
+    public override string GetPoints() {
+        if (_amountCompleted == _target) {
+            return (int.Parse(base.GetPoints()) + _bonus).ToString();
+        } else {
+            return base.GetPoints();
+        }
+    }
     public override void RecordEvent () {
         _amountCompleted++;
     }
