@@ -5,12 +5,12 @@ public class EternalGoal : Goal {
 
     }
     public override void RecordEvent () {
-        
+
     }
     public override bool IsCompleted () {
         return false;
     }
     public override string GetStringRepresentation () {
-        return $"SimpleGoal:{GetName()}|{GetDescription()}|{GetPoints()}";
+        return $"EternalGoal:{GetName()}|{GetDescription()}|{GetPoints()}";
     }
 }

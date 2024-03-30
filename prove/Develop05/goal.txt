@@ -1,4 +1,4 @@
-0
+20
 SimpleGoal:Study|Read|20|True
-SimpleGoal:Breath|in & out|50
-SimpleGoal:Click|tap|3|10|3|0
+EternalGoal:Breath|in & out|50
+ChecklistGoal:Click|tap|3|10|3|0

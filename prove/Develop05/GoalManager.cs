@@ -20,7 +20,8 @@ public class GoalManager {
             Console.WriteLine($"{tab}3. Save Goal");
             Console.WriteLine($"{tab}4. Load Goal");
             Console.WriteLine($"{tab}5. Record Event");
-            Console.WriteLine($"{tab}6. Quit");
+            Console.WriteLine($"{tab}6. Delete Goal");
+            Console.WriteLine($"{tab}7. Quit");
             Console.Write("Select a choice from the menu: ");
             string respons = Console.ReadLine();
 
@@ -46,6 +47,10 @@ public class GoalManager {
                     break;
                 }
                 case "6": {
+                    DeleteGoal();
+                    break;
+                }
+                case "7": {
                     quit = true;
                     break;
                 }
@@ -153,45 +158,59 @@ public class GoalManager {
         Console.Write("What is the filename of the goal file? ");
         string filename = Console.ReadLine();
         string[] lines = System.IO.File.ReadAllLines(filename);
-
+        int i = 0;
         foreach (string line in lines) {
-            string[] parts = line.Split(":");
+            if (i == 0) {
+                _score = int.Parse(line);
+                i++;
+            } else {
+                string[] parts = line.Split(":");
 
-            string goalType = parts[0];
-            string goalDetails = parts[1];
+                string goalType = parts[0];
+                Console.WriteLine(goalType);
+                string goalDetails = parts[1];
 
-            string[] goalDetailsList = goalDetails.Split("|");
+                string[] goalDetailsList = goalDetails.Split("|");
 
-            switch(goalType) {
-                case "SimpleGoal": {
-                    string name = goalDetailsList[0];
-                    string description = goalDetailsList[1];
-                    string points = goalDetailsList[2];
-                    bool isCompleted = bool.Parse(goalDetailsList[3]);
-                    SimpleGoal goal = new SimpleGoal(name, description, points, isCompleted);
-                    _goals.Add(goal);
-                    break;
-                }
-                case "EternalGoal": {
-                    string name = goalDetailsList[0];
-                    string description = goalDetailsList[1];
-                    string points = goalDetailsList[2];
-                    EternalGoal goal = new EternalGoal(name, description, points);
-                    _goals.Add(goal);
-                    break;
-                }
-                case "ChecklistGoal": {
-                    string name = goalDetailsList[0];
-                    string description = goalDetailsList[1];
-                    string points = goalDetailsList[2];
-                    int target = int.Parse(goalDetailsList[3]);
-                    int bonus = int.Parse(goalDetailsList[4]);
-                    int amountCompleted = int.Parse(goalDetailsList[5]);
-                    ChecklistGoal goal = new ChecklistGoal(name, description, points, target, bonus, amountCompleted);
-                    _goals.Add(goal);
-                    break;
+                switch(goalType) {
+                    case "SimpleGoal": {
+                        string name = goalDetailsList[0];
+                        string description = goalDetailsList[1];
+                        string points = goalDetailsList[2];
+                        bool isCompleted = bool.Parse(goalDetailsList[3]);
+                        SimpleGoal goal = new SimpleGoal(name, description, points, isCompleted);
+                        _goals.Add(goal);
+                        break;
+                    }
+                    case "EternalGoal": {
+                        string name = goalDetailsList[0];
+                        string description = goalDetailsList[1];
+                        string points = goalDetailsList[2];
+                        EternalGoal goal = new EternalGoal(name, description, points);
+                        _goals.Add(goal);
+                        break;
+                    }
+                    case "ChecklistGoal": {
+                        string name = goalDetailsList[0];
+                        string description = goalDetailsList[1];
+                        string points = goalDetailsList[2];
+                        int target = int.Parse(goalDetailsList[3]);
+                        int bonus = int.Parse(goalDetailsList[4]);
+                        int amountCompleted = int.Parse(goalDetailsList[5]);
+                        ChecklistGoal goal = new ChecklistGoal(name, description, points, target, bonus, amountCompleted);
+                        _goals.Add(goal);
+                        break;
+                    }
                 }
             }
+            
         }
+    }
+    public void DeleteGoal () {
+        Console.WriteLine("The goals are:");
+        ListGoalNames();
+        Console.Write("Which goal do you want to delete? ");
+        int respons = int.Parse(Console.ReadLine());
+        _goals.RemoveAt(respons - 1);
     }
 }

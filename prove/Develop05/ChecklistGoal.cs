@@ -36,6 +36,6 @@ public class ChecklistGoal : Goal {
         return $"({GetDescription()}) -- Completed: {_amountCompleted}/{_target}";
     }
     public override string GetStringRepresentation () {
-        return $"SimpleGoal:{GetName()}|{GetDescription()}|{GetPoints()}|{_bonus}|{_target}|{_amountCompleted}";
+        return $"ChecklistGoal:{GetName()}|{GetDescription()}|{GetPoints()}|{_target}|{_bonus}|{_amountCompleted}";
     }
 }
