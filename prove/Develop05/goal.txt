@@ -1,0 +1,4 @@
+0
+SimpleGoal:Study|Read|20|True
+SimpleGoal:Breath|in & out|50
+SimpleGoal:Click|tap|3|10|3|0
