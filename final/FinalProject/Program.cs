@@ -6,7 +6,7 @@ class Program
     {
         Console.Clear();
         MapManager map = new MapManager();
-        map.GenerateSection(16, 16);
+        map.GenerateSection(8, 8);
         map.DisplayMapSection(0, 8);
     }
 }

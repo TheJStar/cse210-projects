@@ -5,4 +5,11 @@ public class TreeTile : Tile {
         _allStates = new List<string>() {"^v^"};
         _currentState = _allStates[0];
     }
+    public override void DisplayState()
+    {
+        Console.BackgroundColor = ConsoleColor.DarkGreen;
+        Console.ForegroundColor = ConsoleColor.DarkGreen;
+        base.DisplayState();
+        Console.ResetColor();
+    }
 }

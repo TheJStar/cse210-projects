@@ -9,4 +9,11 @@ public class EnemyTile : Tile {
     {
         base.TileAction(); // switch with adjacent
     }
+    public override void DisplayState()
+    {
+        Console.BackgroundColor = ConsoleColor.Green;
+        Console.ForegroundColor = ConsoleColor.Red;
+        base.DisplayState();
+        Console.ResetColor();
+    }
 }

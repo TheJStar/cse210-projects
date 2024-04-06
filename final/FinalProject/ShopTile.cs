@@ -8,4 +8,11 @@ public class ShopTile : Tile {
     public void BuyHealingPotion () {
         
     }
+    public override void DisplayState()
+    {
+        Console.BackgroundColor = ConsoleColor.Magenta;
+        Console.ForegroundColor = ConsoleColor.Magenta;
+        base.DisplayState();
+        Console.ResetColor();
+    }
 }

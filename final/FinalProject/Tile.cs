@@ -9,8 +9,7 @@ public abstract class Tile {
     public Tile () {
         
     }   
-
-    public void DisplayState () {
+    public virtual void DisplayState () {
         Console.Write(_currentState);
     }
     public string GetDescription () {

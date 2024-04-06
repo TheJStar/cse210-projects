@@ -8,4 +8,11 @@ public class CoinTile : Tile {
     public int AddMoney () {
         return 1;
     }
+    public override void DisplayState()
+    {
+        Console.BackgroundColor = ConsoleColor.Yellow;
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        base.DisplayState();
+        Console.ResetColor();
+    }
 }
