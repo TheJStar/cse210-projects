@@ -7,7 +7,7 @@ public abstract class Tile {
     protected string _tileAction;
 
     public Tile () {
-        _currentState = _allStates[0];
+        
     }   
 
     public void DisplayState () {

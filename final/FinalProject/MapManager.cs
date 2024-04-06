@@ -2,12 +2,63 @@ using System;
 
 public class MapManager {
     List<List<Tile>> _map;
-    public void GenerateStrip () {
+    public void GenerateSection () {
         List<Tile> strip = new List<Tile>(8);
-        for (int i = 0; i < strip.Count; i++) {
-            //Tile t = new Tile(); // generate the tile states | also generate the Tile type | Tile is an abstract class
-            //strip.Add(t);
-        }
+        Random random = new Random();
+        for (int row = 0; row < 8; row++) {
+            int shopChance = 0;
+            int coinChance = 0;
+            int rockChance = 0;
+            int x = random.Next(11111111, 99999999);
+            for (int col = 0; col < strip.Count; col++) {
+                switch(x.ToString()[col]) {
+                    case '2': {
+                        if (rockChance < 7) {
+                            RockTile tile = new RockTile();
+                            rockChance++;
+                            strip.Add(tile);
+                        } else {
+                            FloorTile tile = new FloorTile();
+                            strip.Add(tile);
+                        }
+                        break;
+                    }
+                    case '3': {
+                        TreeTile tile = new TreeTile();
+                        strip.Add(tile);
+                        break;
+                    }
+                    case '4': {
+                        if (coinChance < 4) {
+                            CoinTile tile = new CoinTile();
+                            coinChance++;
+                            strip.Add(tile);
+                        } else {
+                            FloorTile tile = new FloorTile();
+                            strip.Add(tile);
+                        }
+                        break;
+                    }
+                    case '5': {
+                        if (shopChance == 0) {
+                            ShopTile tile = new ShopTile();
+                            shopChance++;
+                            strip.Add(tile);
+                        } else {
+                            FloorTile tile = new FloorTile();
+                            strip.Add(tile);
+                        }
+                        break;
+                    }
+                    default: {
+                        FloorTile tile = new FloorTile();
+                        strip.Add(tile);
+                        break;
+                    }
+                }
+            }
+            _map.Add(strip);
+        } 
     }
     public void MovePlayer (string action) {
         // if (action[0] == 'l' && _playerXCoord > 0) {
