@@ -19,6 +19,9 @@ public abstract class Tile {
     public void ChangeState (int index) {
         _currentState = _allStates[index];
     }
+    public void AddState (string state) {
+        _allStates.Add(state);
+    }
     public virtual void TileAction () {
         //nothing 
     }
