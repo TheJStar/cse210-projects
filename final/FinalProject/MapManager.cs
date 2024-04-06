@@ -2,20 +2,20 @@ using System;
 
 public class MapManager {
     private List<List<Tile>> _map = new List<List<Tile>>();
-    private List<Tile> strip = new List<Tile>();
-    public void GenerateSection () {
-        strip.Clear();
+
+    public void GenerateSection (int height, int lenght) {
+        int shopChance = 0;
+        int enemyChance = 0;
+        int coinChance = 0;
+        int rockChance = 0;
         Random random = new Random();
-        for (int row = 0; row < 8; row++) {
-            int shopChance = 0;
-            int coinChance = 0;
-            int rockChance = 0;
-            int x = random.Next(11111111, 99999999);
-            strip.Clear();
-            for (int col = 0; col < 8; col++) {
-                switch(x.ToString()[col]) {
-                    case '2': {
-                        if (rockChance < 7) {
+        for (int row = 0; row < height; row++) {
+            List<Tile> strip = new List<Tile>();
+            for (int col = 0; col < lenght; col++) {
+                int x = random.Next(1, 10);
+                switch(x.ToString()) {
+                    case "1": {
+                        if (rockChance < Math.Ceiling(height * lenght * 0.20)) {
                             RockTile tile = new RockTile();
                             rockChance++;
                             strip.Add(tile);
@@ -25,13 +25,13 @@ public class MapManager {
                         }
                         break;
                     }
-                    case '3': {
+                    case "2": {
                         TreeTile tile = new TreeTile();
                         strip.Add(tile);
                         break;
                     }
-                    case '4': {
-                        if (coinChance < 4) {
+                    case "3": {
+                        if (coinChance < Math.Ceiling(height * lenght * 0.05)) {
                             CoinTile tile = new CoinTile();
                             coinChance++;
                             strip.Add(tile);
@@ -41,10 +41,21 @@ public class MapManager {
                         }
                         break;
                     }
-                    case '5': {
+                    case "4": {
                         if (shopChance == 0) {
                             ShopTile tile = new ShopTile();
                             shopChance++;
+                            strip.Add(tile);
+                        } else {
+                            FloorTile tile = new FloorTile();
+                            strip.Add(tile);
+                        }
+                        break;
+                    }
+                    case "5": {
+                        if (enemyChance < Math.Ceiling(height * lenght * 0.01)) {
+                            EnemyTile tile = new EnemyTile();
+                            enemyChance++;
                             strip.Add(tile);
                         } else {
                             FloorTile tile = new FloorTile();
