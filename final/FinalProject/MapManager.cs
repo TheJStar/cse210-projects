@@ -1,16 +1,18 @@
 using System;
 
 public class MapManager {
-    List<List<Tile>> _map;
+    private List<List<Tile>> _map = new List<List<Tile>>();
+    private List<Tile> strip = new List<Tile>();
     public void GenerateSection () {
-        List<Tile> strip = new List<Tile>(8);
+        strip.Clear();
         Random random = new Random();
         for (int row = 0; row < 8; row++) {
             int shopChance = 0;
             int coinChance = 0;
             int rockChance = 0;
             int x = random.Next(11111111, 99999999);
-            for (int col = 0; col < strip.Count; col++) {
+            strip.Clear();
+            for (int col = 0; col < 8; col++) {
                 switch(x.ToString()[col]) {
                     case '2': {
                         if (rockChance < 7) {
@@ -72,9 +74,10 @@ public class MapManager {
         // }
     }
     public void DisplayMapSection (int startIndex, int endIndex) {
-        for (int i = startIndex; i < endIndex; i++) {
-            foreach (Tile t in _map[i]) {
-                t.DisplayState();
+        foreach (List<Tile> strip in _map) {
+            Console.Write("\n");
+            foreach (Tile tile in strip) {
+                tile.DisplayState();
             }
         }
     }
