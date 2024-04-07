@@ -9,14 +9,29 @@ public abstract class Tile {
     public Tile () {
         
     }   
+    public string GetFirstState () {
+        return _allStates[0];
+    }
     public virtual void DisplayState () {
-        Console.Write(_currentState);
+        if (_currentState == "@P-") {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write(_currentState);
+            Console.ResetColor();
+        } else {
+            Console.Write(_currentState);
+        }
     }
     public string GetDescription () {
         return _tileDescription;
     }
+    public string GetTileAction () {
+        return _tileAction;
+    }
     public void ChangeState (int index) {
         _currentState = _allStates[index];
+    }
+    public void ChangeState (string newState) {
+        _currentState = newState;
     }
     public void AddState (string state) {
         _allStates.Add(state);
