@@ -15,7 +15,7 @@ public class Menu {
             Console.WriteLine();
             map.DisplayTileAction();
             Console.WriteLine();
-            Console.Write("Type your next action [u, d, l, r]: ");
+            Console.Write("Type your next action [u, d, l, r] or 'quit' if you want to end early: ");
             string respons = Console.ReadLine();
             _playerHistory.Add(respons);
             if (respons == "quit") {

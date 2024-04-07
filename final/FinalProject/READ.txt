@@ -1,0 +1,9 @@
+This is the progress description:
+
+all of the necessery method, functions and classes were created,
+the core gameplay of the program is created like, player movement, map generation, win condition,
+and the ui for gameplay like taking input and executing, 
+while showing the player health and money amount (the coins can be picked up and they get registered)
+the only things left is to implement the losing logic with 
+everything that would contribute the player to lose like the enemies and the storm 
+also need to add the shop system
