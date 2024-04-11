@@ -74,8 +74,8 @@ public class MapManager {
                         break;
                     }
                     case "5": {
-                        if (enemyChance < Math.Ceiling(height * lenght * 0.01)) {
-                            EnemyTile tile = new EnemyTile();
+                        if (enemyChance < Math.Ceiling(height * lenght * 0.001)) {
+                            EnemyTile tile = new EnemyTile(row, col);
                             enemyChance++;
                             strip.Add(tile);
                         } else {
@@ -111,8 +111,11 @@ public class MapManager {
                 Console.WriteLine("There is a rock there try to move around the rock [press enter to continue]: ");
                 Console.ReadLine();
             }
+            
             _player.SetCoords(xCoord, yCoord);
-            _map[yCoord][xCoord].ChangeState(_player.GetPlayerSprite());
+            if (_map[yCoord][xCoord].GetType() != typeof(EnemyTile)) {
+                _map[yCoord][xCoord].ChangeState(_player.GetPlayerSprite());
+            }
             if (_map[yCoord][xCoord].GetType() == typeof(CoinTile) && _map[yCoord][xCoord].GetFirstState() == "($)") {
                 _player.SetMoney(_player.GetMoney() + 1);
                 _map[yCoord][xCoord].TileAction();
@@ -130,11 +133,41 @@ public class MapManager {
                 startIndex = endIndex;
                 endIndex = startIndex + lenght;
             } 
-            if (_player.GetCoords()[1] >= endIndex) {
-                
+            for (int i = endIndex - 1; i >= startIndex ; i--) {
+                bool hasMoved = false;
+                for (int j = _map[i].Count - 1; j > -1; j--) {
+                    Tile tile = _map[i][j];
+                    _map[_player.GetCoords()[1]][_player.GetCoords()[0]].ChangeState(0);
+                    if (tile.GetType() == typeof(EnemyTile) && !hasMoved) {
+                        hasMoved = true;
+                        int x = tile.GetXCoord();
+                        int y = tile.GetYCoord();
+                        _map[i][j].TileAction();
+                        int xNew = tile.GetXCoord();
+                        int yNew = tile.GetYCoord();
+                        if (xNew < _map[i].Count && yNew < _map.Count && xNew > -1 && yNew > -1) {
+                            if (xNew != x) {
+                                _map[i].Remove(tile);
+                                _map[i].Insert( xNew, tile);
+                            } else if (yNew != y) {
+                                Tile verticalTile = _map[yNew][j];
+                                _map[i].Remove(tile);
+                                _map[yNew].Remove(verticalTile);
+                                _map[yNew].Insert( xNew, tile);
+                                _map[i].Insert( xNew, verticalTile);
+                            }
+                            if (_player.GetCoords()[0] == xNew && _player.GetCoords()[1] == yNew ) {
+                                _player.SetCoords(x, y);
+                                _player.SetHealthBar(_player.GetHealthBar() - 1);
+                            }
+                        } else {
+                            tile.SetXCoord(x);
+                            tile.SetYCoord(y);
+                        }                        
+                    }
+                    _map[_player.GetCoords()[1]][_player.GetCoords()[0]].ChangeState(_player.GetPlayerSprite());
+                }
             }
-            //Console.WriteLine($"{_player.GetCoords()[0]}/{_player.GetCoords()[1]}");
-            //Console.WriteLine($"{startIndex}/{endIndex}");
             for (int i = startIndex; i < endIndex; i++) {
                 Console.Write("\n");
                 foreach (Tile tile in _map[i]) {

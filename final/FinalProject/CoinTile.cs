@@ -10,6 +10,7 @@ public class CoinTile : Tile {
     public override void TileAction () {
         if (_allStates[0] == "($)") {
             _allStates.RemoveAt(0);
+            _tileAction = "...";
         }
     }
     public override void DisplayState()

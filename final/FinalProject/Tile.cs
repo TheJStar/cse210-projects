@@ -5,10 +5,27 @@ public abstract class Tile {
     protected List<string> _allStates;
     protected string _tileDescription;
     protected string _tileAction;
+    protected int _xCoord;
+    protected int _yCoord;
 
     public Tile () {
         
-    }   
+    }
+    public int GetXCoord () {
+        return _xCoord;
+    }
+    public int GetYCoord () {
+        return _yCoord;
+    }
+    public void SetXCoord (int xCoord) {
+        _xCoord = xCoord;
+    }
+    public void SetYCoord (int yCoord) {
+        _yCoord = yCoord;
+    }
+    public string GetTileState () {
+        return _currentState;
+    }
     public string GetFirstState () {
         return _allStates[0];
     }
