@@ -7,7 +7,7 @@ public class ShopTile : Tile {
         _allStates = new List<string>() {"|$|"};
         _currentState = _allStates[0];
     }
-    public void BuyHealingPotion () {
+    public override void TileAction () {
         
     }
     public override void DisplayState()

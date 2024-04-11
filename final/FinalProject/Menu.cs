@@ -5,11 +5,12 @@ public class Menu {
     public void Run () {
         int height = 40;
         int lenght = 8;
-        MapManager map = new MapManager(height, lenght, 3, 0);
+        MapManager map = new MapManager(height, lenght, 3, 0, 7);
         bool quit = false;
         do {
             Console.Clear();
             map.DisplayPlayerInfo();
+            map.DisplayStormCounter();
             Console.WriteLine();
             map.DisplayMapSection(lenght);
             Console.WriteLine();
@@ -18,7 +19,7 @@ public class Menu {
             Console.Write("Type your next action [u, d, l, r] or 'quit' if you want to end early: ");
             string respons = Console.ReadLine();
             _playerHistory.Add(respons);
-            if (respons == "quit") {
+            if (respons == "quit" || map.GetPlayerHealth() == 0) {
                 quit = true;
             }
             int[] playerCoords = map.MovePlayer(respons);
@@ -28,7 +29,12 @@ public class Menu {
                 quit = true;
             }
         } while (!quit);
-        DisplayWinScreen();
+        if (map.GetPlayerHealth() > 0) {
+            DisplayWinScreen();
+        } else {
+            DisplayLoseScreen();
+        }
+        
     }
     public void Save () {
         
@@ -48,6 +54,8 @@ public class Menu {
         Console.ReadLine();
     }
     public void DisplayLoseScreen () {
-        
+        Console.Clear();
+        Console.Write("You Lost the game [press enter to quit the program]: ");
+        Console.ReadLine();
     }
 }

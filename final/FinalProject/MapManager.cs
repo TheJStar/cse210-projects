@@ -3,12 +3,14 @@ using System;
 public class MapManager {
     private List<List<Tile>> _map;
     private PlayerInfo _player = new PlayerInfo(0, 0, 0, 0);
+    private int _stormCounter;
 
-    public MapManager (int height, int length, int healthPoins, int money) {
+    public MapManager (int height, int length, int healthPoins, int money, int stormCounter) {
         _map = new List<List<Tile>>();
         GenerateSection(height, length);
         _player.SetHealthBar(healthPoins);
         _player.SetMoney(money);
+        _stormCounter = stormCounter;
         bool hasEnded = false;
         for (int yCoord = 0; yCoord < height; yCoord++) {
             for (int xCoord = 0; xCoord < length; xCoord++) {
@@ -96,6 +98,7 @@ public class MapManager {
     }
     public int[] MovePlayer (string action) {
         if (_player != null && action != "") {
+            _stormCounter--;
             int xCoord = _player.GetCoords()[0];
             int yCoord = _player.GetCoords()[1];
             _map[yCoord][xCoord].ChangeState(0);
@@ -108,6 +111,7 @@ public class MapManager {
             } else if (action[0] == 'd' && yCoord < _map.Count - 1 && _map[yCoord + 1][xCoord].GetType() != typeof(RockTile)) {
                 yCoord++;
             } else {
+                Console.WriteLine("You either typed something wrong or");
                 Console.WriteLine("There is a rock there try to move around the rock [press enter to continue]: ");
                 Console.ReadLine();
             }
@@ -119,6 +123,17 @@ public class MapManager {
             if (_map[yCoord][xCoord].GetType() == typeof(CoinTile) && _map[yCoord][xCoord].GetFirstState() == "($)") {
                 _player.SetMoney(_player.GetMoney() + 1);
                 _map[yCoord][xCoord].TileAction();
+            }
+            if (_map[yCoord][xCoord].GetType() == typeof(ShopTile) && _player.GetMoney() > 0 && _player.GetHealthBar() < 4) {
+                _player.SetMoney(_player.GetMoney() - 1);
+                _player.SetHealthBar(_player.GetHealthBar() + 1);
+                _map[yCoord][xCoord].TileAction();
+            }
+            if (_stormCounter == 0 && _map[_player.GetCoords()[1]][_player.GetCoords()[0]].GetType() != typeof(TreeTile)) {
+                _player.SetHealthBar(_player.GetHealthBar() - 1);
+                _stormCounter = 5;
+            } else if (_stormCounter == 0) {
+                _stormCounter = 5;
             }
         } else {
             Console.WriteLine("player is null");
@@ -181,5 +196,11 @@ public class MapManager {
     }
     public void DisplayTileAction () {
         Console.WriteLine(_map[_player.GetCoords()[1]][_player.GetCoords()[0]].GetTileAction());
+    }
+    public void DisplayStormCounter () {
+        Console.Write($"Truns till Strom: {_stormCounter}");
+    }
+    public int GetPlayerHealth () {
+        return _player.GetHealthBar();
     }
 }
