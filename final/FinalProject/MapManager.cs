@@ -26,6 +26,13 @@ public class MapManager {
             }
         }  
     }
+    public MapManager (int height, int length, int healthPoins, int money, int stormCounter, int xCoord, int yCoord, List<List<Tile>> map) {
+        _map = new List<List<Tile>>(map);
+        _player.SetHealthBar(healthPoins);
+        _player.SetMoney(money);
+        _player.SetCoords(xCoord, yCoord);
+        _stormCounter = stormCounter;
+    }
     public void GenerateSection (int height, int lenght) {
         int shopChance = 0;
         int enemyChance = 0;
@@ -96,7 +103,7 @@ public class MapManager {
             _map.Add(strip);
         } 
     }
-    public int[] MovePlayer (string action) {
+    public int[] MovePlayer (string action, int stormCounter) {
         if (_player != null && action != "") {
             _stormCounter--;
             int xCoord = _player.GetCoords()[0];
@@ -131,10 +138,12 @@ public class MapManager {
             }
             if (_stormCounter == 0 && _map[_player.GetCoords()[1]][_player.GetCoords()[0]].GetType() != typeof(TreeTile)) {
                 _player.SetHealthBar(_player.GetHealthBar() - 1);
-                _stormCounter = 5;
+                _stormCounter = stormCounter;
             } else if (_stormCounter == 0) {
-                _stormCounter = 5;
+                _stormCounter = stormCounter;
             }
+        } else if (action == "save" || action == "load" || action == "quit") {
+            // nothing
         } else {
             Console.WriteLine("player is null");
         }
@@ -198,9 +207,27 @@ public class MapManager {
         Console.WriteLine(_map[_player.GetCoords()[1]][_player.GetCoords()[0]].GetTileAction());
     }
     public void DisplayStormCounter () {
-        Console.Write($"Truns till Strom: {_stormCounter}");
+        Console.Write($"Truns till Storm: {_stormCounter}");
     }
     public int GetPlayerHealth () {
         return _player.GetHealthBar();
+    }
+    public int GetPlayerMoney () {
+        return _player.GetMoney();
+    }
+    public int[] GetPlayerCoords () {
+        return _player.GetCoords();
+    }
+    public int GetStormCounter () {
+        return _stormCounter;
+    }
+    public void SetStormCounter (int stormCounter) {
+        _stormCounter = stormCounter;
+    }
+    public List<List<Tile>> GetMap () {
+        return _map;
+    }
+    public void SetMap (List<List<Tile>> map) {
+        _map = map;
     }
 }

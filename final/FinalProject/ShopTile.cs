@@ -7,9 +7,6 @@ public class ShopTile : Tile {
         _allStates = new List<string>() {"|$|"};
         _currentState = _allStates[0];
     }
-    public override void TileAction () {
-        
-    }
     public override void DisplayState()
     {
         Console.BackgroundColor = ConsoleColor.Magenta;
